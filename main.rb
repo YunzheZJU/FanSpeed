@@ -16,7 +16,7 @@ class FS
 
     @pwm.start 0
 
-    puts "FanSpeed is running."
+    p "FanSpeed is running."
   end
 
   def get_cpu_temp
@@ -32,11 +32,11 @@ class FS
 
     if current_temp > TEMP_THRESHOLD_LOW
       if @last_temp <= TEMP_THRESHOLD_LOW
-        puts "Fan is waked up."
+        p "Fan is waked up."
       end
-      puts "[#{current_temp.round(2)}] Fan speed is around #{@pwm.duty_cycle.to_i}%."
+      p "[#{current_temp.round(2)}] Fan speed is around #{@pwm.duty_cycle.to_i}%."
     else
-      puts "Fan is sleeping."
+      p "Fan is sleeping."
     end
 
     @last_temp = current_temp
@@ -46,14 +46,14 @@ class FS
     @pwm.stop
     RPi::GPIO.clean_up 2
 
-    puts "FanSpeed stops."
+    p "FanSpeed stops."
   end
 end
 
 fs = FS.new
 
 Signal.trap("INT") do
-  puts "Interrupted."
+  p "Interrupted."
   
   fs.clean_up
 
